@@ -154,6 +154,19 @@ which are in the device memory. Read them before you reconfigure the device.
   - The RC-5 does not derive its clock from `configuration-time`, so `device-time`
 is written along with the configuration. There is no need to set it separately.
 
+A stopped RC-5 cannot be restarted by its button (the *Repeat start* function is
+RC-5+/RC-5+TE only): it must be reset. This reproduces the "Quick Reset" of the official
+software (writing the configuration, sending a format, and writing the configuration
+again, as the format erases it):
+```sh
+$ python elitech --device [/dev/path] reset
+```
+After the reset, press the left button for 5 s to start a new recording. Beware that the
+reset, like any configuration write, **deletes the records** in the device memory.
+
+The communication protocol of the RC-5, and the reverse engineering behind this support,
+are documented in [doc/RC-5.md](doc/RC-5.md).
+
 ### Records
 The records can be read through the HID interface using
 ```sh
